@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addCounter } from "../actions/counter";
 
+@connect(mapStateToProps, { addCounter })
 class Counter extends Component {
   render() {
     console.log(this.props);
@@ -21,4 +22,4 @@ function mapStateToProps({ counter }) {
   };
 }
 
-export default connect(mapStateToProps, { addCounter })(Counter);
+export default Counter;
