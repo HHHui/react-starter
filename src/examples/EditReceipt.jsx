@@ -2,15 +2,6 @@ import React, { Component } from "react";
 import { Form, Input, Button, Row, Col } from "antd";
 const FormItem = Form.Item;
 
-const itemLayout = {
-  labelCol: {
-    span: 4
-  },
-  wrapperCol: {
-    span: 20
-  }
-};
-
 const normalLayout = {
   labelCol: {
     span: 1
@@ -141,7 +132,7 @@ class EditReceipt extends Component {
   };
 
   render() {
-    const { getFieldDecorator, getFieldValue, getFieldError, getFieldsError } = this.props.form;
+    const { getFieldDecorator, getFieldValue, getFieldError } = this.props.form;
     const amountError = getFieldError('amount');
     
     return (
