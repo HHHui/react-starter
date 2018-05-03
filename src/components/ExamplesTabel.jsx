@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import config from "../examples";
 import { Route, Link } from "react-router-dom";
 import { Table } from "antd";
+import _config from "../examples/index.json";
+
+const config = Object.keys(_config).map((key) => _config[key]);
 
 const columns = [
   {
@@ -26,7 +28,7 @@ class ExamplesTabel extends Component {
           rowKey={({ name }) => name}
         />
         {config.map(c => 
-          <Route key={c.name} path={`/examples/${c.name}`} component={c.component}/>
+          <Route key={c.name} path={`/examples/${c.name}`} component={require(`../examples/${c.componentPath}`).default}/>
         )}
       </div>
     );

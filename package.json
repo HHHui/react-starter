@@ -15,10 +15,12 @@
   },
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
+    "chokidar": "^2.0.3",
     "react-app-rewired": "^1.5.2",
     "react-scripts": "1.1.1"
   },
   "scripts": {
+    "watch": "node ./dev-utils/route-watcher.js",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
