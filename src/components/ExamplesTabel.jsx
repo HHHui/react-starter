@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Table } from "antd";
 import _config from "../examples/index.json";
+import { values } from 'lodash';
+import ExamplesRoutes from './ExampleRoutes';
 
-const config = Object.keys(_config).map((key) => _config[key]);
-
+const config = values(_config);
 const columns = [
   {
     title: "Component",
@@ -27,9 +28,7 @@ class ExamplesTabel extends Component {
           dataSource={config}
           rowKey={({ name }) => name}
         />
-        {config.map(c => 
-          <Route key={c.name} path={`/examples/${c.name}`} component={require(`../examples/${c.componentPath}`).default}/>
-        )}
+        <ExamplesRoutes/>
       </div>
     );
   }

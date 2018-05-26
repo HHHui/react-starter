@@ -47,3 +47,13 @@ ajax("..", function(){ ... }) 这其中的callback function不是由自己,而�
 
 ## antd Table
 1. what's the use of column 
+
+## 关于import
+下面这两句是等价的
+import Fuck from 'examples/Counter';
+const Fuck = require('examples/Counter').default;
+
+## 动态导入
+https://github.com/webpack/webpack/issues/794
+https://webpack.js.org/guides/dependency-management/#require-context
+require-context的问题要写死.
