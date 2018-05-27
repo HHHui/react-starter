@@ -5,7 +5,6 @@ import { addCounter } from "../actions/counter";
 @connect(mapStateToProps, { addCounter })
 class Counter extends Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <h1>{this.props.value}</h1>
