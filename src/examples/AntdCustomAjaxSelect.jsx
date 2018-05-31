@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Select, Form } from 'antd'
+import { Select, Form, Spin } from 'antd'
 const Option = Select.Option;
 
 let timeout;
@@ -35,11 +35,15 @@ function fetch(value, callback) {
 // 封装Select,输出value: object
 // 自定义组件要实现受控而非受控两种状态
 // 目前实现 受控基本Ok, 非受控0%
-// 1.需求
+// 实现的功能
 // 1. 必须选中才有值
-// 
-// 1. problem onSelect之后onChange(obj)
-// 2. 没有提供接口自定义input,不能像react-select那样实现一个X
+// 2. 没有值onBlur的时候清空,防止误导用户
+// 3. 加载时候spiner
+// 需求
+// 1. input是否可以定制×号
+// 2. 非受控组件
+const loadingStyle = { display: 'flex', justifyContent: 'center' }  
+
 class SearchInput extends React.Component {
 
   constructor(props){
@@ -51,7 +55,8 @@ class SearchInput extends React.Component {
       data: [],
       value,
       isSelected: false, 
-      query: ""
+      query: "",
+      loading: true
     }
   }
 
@@ -63,13 +68,17 @@ class SearchInput extends React.Component {
   }
 
   handleChange = (query) => {
+    this.setState({ query });
+  }
+
+  handleSearch = (query) => {
     const { isSelected } = this.state;
     if(isSelected) {
       this.triggerChange(null);
     }
-    this.setState({ query });
+    this.setState({loading: true})
     fetch(query, data => {
-      this.setState({ data })
+      this.setState({ data, loading: false })
     });
   }
 
@@ -100,19 +109,30 @@ class SearchInput extends React.Component {
     }
   }
 
+  getNotFoundContent () {
+    if (!this.state.loading) return '啥也没找到'
+    return (
+      <div style={loadingStyle}>
+        <Spin size='small' />
+      </div>
+    )
+  }
+
   render() {
     const options = this.state.data.map(d => <Option key={d.id} value={d.name}>{d.name}</Option>);
     return (
       <Select
-        mode='combobox'
+        mode="combobox"
         value={this.state.query}
         placeholder={this.props.placeholder}
         style={this.props.style}
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}
+        notFoundContent={this.getNotFoundContent()}
         onChange={this.handleChange}
         onSelect={this.handleSelect}
+        onSearch={this.handleSearch}
         onBlur={this.handleBlur}
       >
         {options}
